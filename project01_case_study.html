@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project 01 — Real Estate Lead List Cleaner | Rashad Ferguson</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:    #1A5C38;
+    --forest2:   #2D7A4F;
+    --forest-lt: #E8F5EE;
+    --amber:     #8B5E00;
+    --amber-lt:  #FFF8E8;
+    --red:       #7A1F1F;
+    --red-lt:    #FFF0F0;
+    --yellow:    #7A6000;
+    --yellow-lt: #FFFFF0;
+    --gray:      #F5F5F5;
+    --gray2:     #E8E8E8;
+    --text:      #1A1A1A;
+    --text-mid:  #555555;
+    --white:     #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: var(--text);
+    background: #fff;
+    line-height: 1.5;
+  }
+
+  .page {
+    width: 816px;
+    margin: 0 auto;
+    padding: 36px 48px 40px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .header-left h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--forest);
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+  .header-left .sub {
+    font-size: 9.5px;
+    color: var(--text-mid);
+    margin-top: 4px;
+  }
+  .header-right {
+    text-align: right;
+    flex-shrink: 0;
+    padding-left: 24px;
+  }
+  .header-right .name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--forest);
+    white-space: nowrap;
+  }
+  .header-right a {
+    display: block;
+    font-size: 9px;
+    color: #0070C0;
+    text-decoration: none;
+    margin-top: 3px;
+    white-space: nowrap;
+  }
+
+  .divider {
+    height: 3px;
+    background: var(--forest);
+    margin-bottom: 16px;
+    border-radius: 1px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-head {
+    background: var(--forest);
+    color: white;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+  }
+
+  /* ── BODY TEXT ── */
+  .body-text {
+    font-size: 9.5px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  /* ── STAT GRID ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .stat-box {
+    padding: 12px 8px;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid var(--gray2);
+  }
+  .stat-box .num {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-box .lbl {
+    font-size: 8px;
+    color: var(--text-mid);
+    line-height: 1.3;
+  }
+  .stat-green { background: var(--forest-lt); }
+  .stat-green .num { color: var(--forest); }
+  .stat-amber { background: var(--amber-lt); }
+  .stat-amber .num { color: var(--amber); }
+  .stat-red   { background: var(--red-lt); }
+  .stat-red   .num { color: var(--red); }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+    margin-bottom: 14px;
+  }
+  th {
+    padding: 6px 10px;
+    font-weight: 700;
+    font-size: 8.5px;
+    text-align: left;
+    color: white;
+  }
+  td {
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--gray2);
+    vertical-align: top;
+  }
+  .th-green { background: var(--forest); }
+  .th-red   { background: #A03030; }
+  .th-forest2 { background: var(--forest2); }
+  .th-dark  { background: #444; }
+
+  .td-gray  { background: var(--gray); }
+  .td-red   { background: #FFF5F5; color: #880000; }
+  .td-green { background: var(--forest-lt); color: var(--forest); }
+  .td-green-lt { background: var(--forest-lt); }
+  .td-alt   { background: #FAFAFA; }
+
+  /* Verdict badges */
+  .verdict {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 8px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .v-red  { background: var(--red); }
+  .v-yel  { background: var(--yellow); }
+  .v-grn  { background: var(--forest); }
+
+  /* ── FOOTER BLOCK ── */
+  .footer-block {
+    background: var(--forest);
+    color: white;
+    padding: 18px 20px;
+    border-radius: 4px;
+    margin-top: 16px;
+  }
+  .footer-block h3 {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .footer-block p {
+    font-size: 9px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .footer-block .projects {
+    font-size: 8.5px;
+    color: rgba(180,230,200,1);
+    line-height: 1.8;
+    margin-bottom: 10px;
+  }
+  .footer-block .links {
+    font-size: 9px;
+    font-weight: 700;
+    color: white;
+  }
+  .footer-block .links span {
+    margin: 0 8px;
+    opacity: 0.5;
+  }
+
+  /* ── TWO-COL LAYOUT ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .col-section { }
+
+  /* ── PRINT ── */
+  @media print {
+    body { font-size: 10px; }
+    .page { width: 100%; padding: 24px 36px; }
+    .no-print { display: none; }
+  }
+
+  /* ── PRINT BUTTON ── */
+  .print-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--forest);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+  .print-btn:hover { background: var(--forest2); }
+
+  /* Keep tables from breaking across pages */
+  table { page-break-inside: avoid; }
+  .section-head { page-break-after: avoid; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>REAL ESTATE LEAD LIST CLEANER</h1>
+      <div class="sub">Project 01 &nbsp;·&nbsp; Data & AI Operations Portfolio</div>
+    </div>
+    <div class="header-right">
+      <div class="name">Rashad Ferguson</div>
+      <a href="https://rashad.io">rashad.io</a>
+      <a href="https://github.com/rashadflowers99">github.com/rashadflowers99</a>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- THE PROBLEM -->
+  <div class="section-head">THE PROBLEM</div>
+  <p class="body-text">
+    Every month, real estate agents export their lead lists from Zillow, Realtor.com, and Facebook Ads — and every month, those exports are unusable without hours of manual cleanup. Phone numbers arrive in five different formats. The same contact appears multiple times. Names are in ALL CAPS. Budgets say "$450k" in one row and "650000" in the next. And leads with a valid phone number but no email sit quietly in the file, doing nothing — potential commissions that never get followed up.
+  </p>
+
+  <!-- LIVE DEMO -->
+  <div class="section-head">LIVE DEMO RESULTS &nbsp;(50-record Florida leads file)</div>
+  <div class="stat-grid">
+    <div class="stat-box stat-green"><div class="num">50</div><div class="lbl">Records received</div></div>
+    <div class="stat-box stat-green"><div class="num">7</div><div class="lbl">Duplicates removed</div></div>
+    <div class="stat-box stat-green"><div class="num">32</div><div class="lbl">Import-ready leads</div></div>
+    <div class="stat-box stat-amber"><div class="num">11</div><div class="lbl">Email outreach queue</div></div>
+  </div>
+  <div class="stat-grid" style="margin-bottom:14px">
+    <div class="stat-box stat-amber"><div class="num">$522K</div><div class="lbl">Avg budget in outreach queue</div></div>
+    <div class="stat-box stat-amber"><div class="num">~$13K</div><div class="lbl">Est. commission per close</div></div>
+    <div class="stat-box stat-red"><div class="num">80</div><div class="lbl">Same-name pairs scored</div></div>
+    <div class="stat-box stat-red"><div class="num">7</div><div class="lbl">Likely duplicates flagged</div></div>
+  </div>
+
+  <!-- BEFORE / AFTER -->
+  <div class="section-head">BEFORE AND AFTER</div>
+  <table>
+    <thead>
+      <tr>
+        <th class="th-forest2" style="width:15%">Field</th>
+        <th class="th-red" style="width:38%">Raw Input</th>
+        <th class="th-green" style="width:47%">Cleaned Output</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-gray"><strong>Phone</strong></td>
+        <td class="td-red">9047624843 / 407.724.1971 / (813) 751-2688</td>
+        <td class="td-green">(904) 762-4843 &nbsp;/&nbsp; (407) 724-1971 &nbsp;/&nbsp; (813) 751-2688</td>
+      </tr>
+      <tr>
+        <td class="td-gray"><strong>Email</strong></td>
+        <td class="td-red">MichaelScott31@AOL.com</td>
+        <td class="td-green">michaelscott31@aol.com</td>
+      </tr>
+      <tr class="td-alt">
+        <td class="td-gray"><strong>Budget</strong></td>
+        <td class="td-red">$450k &nbsp;/&nbsp; 650000 &nbsp;/&nbsp; Unknown</td>
+        <td class="td-green">$450,000 &nbsp;/&nbsp; $650,000 &nbsp;/&nbsp; Unknown (flagged for call)</td>
+      </tr>
+      <tr>
+        <td class="td-gray"><strong>Source</strong></td>
+        <td class="td-red">zillow lead &nbsp;/&nbsp; ZILLOW &nbsp;/&nbsp; FB_Ad_1</td>
+        <td class="td-green">Zillow &nbsp;/&nbsp; Zillow &nbsp;/&nbsp; Facebook Ad</td>
+      </tr>
+      <tr class="td-alt">
+        <td class="td-gray"><strong>Name</strong></td>
+        <td class="td-red">JANE SMITH &nbsp;/&nbsp; john doe</td>
+        <td class="td-green">Jane Smith &nbsp;/&nbsp; John Doe &nbsp;<em style="font-size:8px;color:#888">(split First + Last)</em></td>
+      </tr>
+      <tr>
+        <td class="td-gray"><strong>Missing email</strong></td>
+        <td class="td-red">Moved to "flagged" — never followed up</td>
+        <td class="td-green">Email Outreach tab: personalized SMS + call script included</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TWO-COL: Conflict Scoring + Time Math -->
+  <div class="two-col">
+    <div class="col-section">
+      <div class="section-head">SAME-NAME CONFLICT SCORING</div>
+      <p class="body-text" style="margin-bottom:8px">
+        Detects same-name groups and scores each pair using business logic — area codes, budgets, sources, and FL metro geography — not fuzzy string matching.
+      </p>
+      <table style="margin-bottom:0">
+        <thead>
+          <tr>
+            <th class="th-dark" style="width:40%">Verdict</th>
+            <th class="th-dark">Scoring signals</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="verdict v-red">🔴 LIKELY DUPLICATE</span></td>
+            <td style="font-size:8.5px">Same area code (+3) + one missing email (+2). Score ≥ 4.</td>
+          </tr>
+          <tr class="td-alt">
+            <td><span class="verdict v-yel">🟡 POSSIBLE DUPLICATE</span></td>
+            <td style="font-size:8.5px">Same source, similar budget, partial overlap. Score 1–3. Agent decides.</td>
+          </tr>
+          <tr>
+            <td><span class="verdict v-grn">🟢 PROBABLY DIFFERENT</span></td>
+            <td style="font-size:8.5px">Different FL metros (Tampa vs Jacksonville = −2). Score ≤ 0. Keep both.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-section">
+      <div class="section-head">THE TIME MATH</div>
+      <table style="margin-bottom:0">
+        <thead>
+          <tr>
+            <th class="th-forest2" style="width:55%">Task</th>
+            <th class="th-red" style="width:22%;text-align:center">Manual</th>
+            <th class="th-green" style="width:23%;text-align:center">This tool</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Standardize 50 phone numbers</td>
+            <td class="td-red" style="text-align:center">~45 min</td>
+            <td class="td-green" style="text-align:center">&lt; 1 sec</td>
+          </tr>
+          <tr class="td-alt">
+            <td>Remove duplicate records</td>
+            <td class="td-red" style="text-align:center">~30 min</td>
+            <td class="td-green" style="text-align:center">&lt; 1 sec</td>
+          </tr>
+          <tr>
+            <td>Fix name casing, split First + Last</td>
+            <td class="td-red" style="text-align:center">~15 min</td>
+            <td class="td-green" style="text-align:center">&lt; 1 sec</td>
+          </tr>
+          <tr class="td-alt">
+            <td>Normalize budget values</td>
+            <td class="td-red" style="text-align:center">~20 min</td>
+            <td class="td-green" style="text-align:center">&lt; 1 sec</td>
+          </tr>
+          <tr>
+            <td>Score same-name conflicts</td>
+            <td class="td-red" style="text-align:center">~60 min</td>
+            <td class="td-green" style="text-align:center">&lt; 1 sec</td>
+          </tr>
+          <tr class="td-alt">
+            <td>Write personalized outreach scripts</td>
+            <td class="td-red" style="text-align:center">~30 min</td>
+            <td class="td-green" style="text-align:center">&lt; 1 sec</td>
+          </tr>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td style="text-align:center;background:#A03030;color:white;font-weight:700">~3.5 hrs</td>
+            <td style="text-align:center;background:var(--forest);color:white;font-weight:700">&lt; 10 sec</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-block">
+    <h3>About This Service</h3>
+    <p>
+      This tool is part of a retainer-based AI operations service for real estate professionals and boutique businesses.
+      Rather than selling generic "AI automation," each engagement targets one specific painful manual task —
+      the exact workflow you're already doing by hand every month — and replaces it with a hardened, maintained system.
+    </p>
+    <div class="projects">
+      Project 01 &nbsp;·&nbsp; Real Estate Lead List Cleaner <em>(this document)</em><br>
+      Project 02 &nbsp;·&nbsp; Client Intake Note Summarizer &nbsp;<em>(prompt architecture for attorneys, brokers, consultants)</em><br>
+      Project 03 &nbsp;·&nbsp; Monthly Operations Report Automator &nbsp;<em>(CSV → narrative report, no spreadsheet skills required)</em>
+    </div>
+    <div class="links">
+      rashad.io <span>·</span> github.com/rashadflowers99
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

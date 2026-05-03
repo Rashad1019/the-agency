@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project 01 — Real Estate Lead List Cleaner | Rashad Ferguson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0C0F0A;
+  --bg2:      #141810;
+  --bg3:      #1C2118;
+  --forest:   #2A7A4E;
+  --forest2:  #3DAA6B;
+  --forest3:  #6DD49A;
+  --amber:    #D4A017;
+  --amber2:   #F0C040;
+  --red:      #C0392B;
+  --red2:     #E74C3C;
+  --text:     #E8EDE4;
+  --text-mid: #8A9E85;
+  --text-dim: #4A5C45;
+  --border:   #2A3528;
+  --mono:     'IBM Plex Mono', monospace;
+  --display:  'Syne', sans-serif;
+  --serif:    'Lora', serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--display);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 48px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(12,15,10,0.92);
+  backdrop-filter: blur(12px);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--forest3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-mid);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--forest3); }
+.nav-cta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--bg);
+  background: var(--forest2);
+  padding: 8px 18px;
+  border-radius: 2px;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--forest3); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grid lines background */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.3;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--forest2);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.2s;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 6vw, 88px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.35s;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--forest2);
+  display: block;
+}
+
+.hero-sub {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--text-mid);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.5s;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.65s;
+}
+
+.btn-primary {
+  background: var(--forest2);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 14px 28px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary:hover { background: var(--forest3); transform: translateY(-1px); }
+
+.btn-secondary {
+  color: var(--text-mid);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s, border-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-secondary:hover { color: var(--text); border-color: var(--text-mid); }
+
+/* Large background number */
+.hero-bg-num {
+  position: absolute;
+  right: -20px;
+  bottom: -40px;
+  font-size: 380px;
+  font-weight: 800;
+  color: var(--bg3);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  user-select: none;
+  z-index: 0;
+}
+
+.hero > * { position: relative; z-index: 1; }
+
+/* ── TICKER BAR ── */
+.ticker-bar {
+  background: var(--forest);
+  padding: 12px 0;
+  overflow: hidden;
+  border-top: 1px solid var(--forest2);
+  border-bottom: 1px solid var(--forest2);
+}
+.ticker-inner {
+  display: flex;
+  gap: 0;
+  animation: ticker 28s linear infinite;
+  white-space: nowrap;
+}
+.ticker-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--bg);
+  font-weight: 500;
+  padding: 0 40px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.ticker-dot {
+  color: rgba(0,0,0,0.3);
+  padding: 0 4px;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 100px 48px;
+  position: relative;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--forest2);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 80px;
+}
+
+.section-title {
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+/* ── LIVE RESULTS ── */
+.results-section {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1px;
+}
+
+.stat-card {
+  background: var(--bg2);
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.stat-card:hover { background: var(--bg3); }
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.stat-green::before  { background: var(--forest2); }
+.stat-amber::before  { background: var(--amber); }
+.stat-red::before    { background: var(--red2); }
+
+.stat-num {
+  font-family: var(--mono);
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: block;
+}
+.stat-green .stat-num  { color: var(--forest3); }
+.stat-amber .stat-num  { color: var(--amber2); }
+.stat-red   .stat-num  { color: var(--red2); }
+
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-mid);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.stat-note {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 8px;
+}
+
+/* ── WHAT IT DOES ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.feature-card {
+  background: var(--bg2);
+  padding: 40px 36px;
+  transition: background 0.3s;
+}
+.feature-card:hover { background: var(--bg3); }
+.feature-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+.feature-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.feature-body {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+.feature-tag {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--forest2);
+  border: 1px solid var(--forest);
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── BEFORE / AFTER ── */
+.ba-section { background: var(--bg); }
+
+.ba-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 48px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ba-table th {
+  padding: 14px 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.th-field { background: var(--bg3); color: var(--text-mid); width: 15%; }
+.th-before { background: rgba(192,57,43,0.15); color: var(--red2); width: 38%; }
+.th-after  { background: rgba(42,122,78,0.15); color: var(--forest3); width: 47%; }
+
+.ba-table td {
+  padding: 14px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.6;
+}
+.td-field  { background: var(--bg3); color: var(--text-mid); font-size: 11px; }
+.td-before { background: rgba(192,57,43,0.07); color: #E87070; }
+.td-after  { background: rgba(42,122,78,0.07); color: var(--forest3); }
+
+/* ── CONFLICT SCORING ── */
+.conflict-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.conflict-explainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 48px;
+  align-items: start;
+}
+
+.conflict-body {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--text-mid);
+  line-height: 1.8;
+}
+.conflict-body strong { color: var(--text); font-style: normal; }
+
+.verdict-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.verdict-card {
+  padding: 20px 24px;
+  border-radius: 2px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.v-red-card  { background: rgba(192,57,43,0.12); border-left: 3px solid var(--red2); }
+.v-yel-card  { background: rgba(212,160,23,0.10); border-left: 3px solid var(--amber); }
+.v-grn-card  { background: rgba(42,122,78,0.12); border-left: 3px solid var(--forest2); }
+
+.verdict-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.vl-red  { background: rgba(192,57,43,0.3); color: var(--red2); }
+.vl-yel  { background: rgba(212,160,23,0.25); color: var(--amber2); }
+.vl-grn  { background: rgba(42,122,78,0.3); color: var(--forest3); }
+
+.verdict-why {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.6;
+  padding-top: 2px;
+}
+
+/* ── OUTPUT TABS ── */
+.tabs-section { background: var(--bg); }
+.tab-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.tab-card {
+  background: var(--bg2);
+  padding: 32px 24px;
+  transition: background 0.3s;
+  cursor: default;
+}
+.tab-card:hover { background: var(--bg3); }
+.tab-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  display: block;
+}
+.tab-name {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.tab-green { border-top: 2px solid var(--forest2); }
+.tab-amber { border-top: 2px solid var(--amber); }
+.tab-red   { border-top: 2px solid var(--red2); }
+.tab-body {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+/* ── TIME MATH ── */
+.time-section { background: var(--bg2); border-top: 1px solid var(--border); }
+
+.time-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 48px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 4px;
+}
+.time-table th {
+  padding: 12px 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+}
+.time-table td {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+.th-task   { background: var(--bg3); color: var(--text-mid); width: 55%; }
+.th-manual { background: rgba(192,57,43,0.15); color: var(--red2); width: 22.5%; }
+.th-auto   { background: rgba(42,122,78,0.15); color: var(--forest3); width: 22.5%; }
+.td-task   { background: var(--bg2); color: var(--text); }
+.td-manual { background: rgba(192,57,43,0.07); color: #E87070; text-align: center; }
+.td-auto   { background: rgba(42,122,78,0.07); color: var(--forest3); text-align: center; }
+.tr-total td { font-weight: 700; }
+.tr-total .td-task   { background: var(--bg3); }
+.tr-total .td-manual { background: rgba(192,57,43,0.2); color: var(--red2); }
+.tr-total .td-auto   { background: rgba(42,122,78,0.2); color: var(--forest3); }
+.tr-alt .td-task, .tr-alt .td-manual, .tr-alt .td-auto {
+  filter: brightness(0.9);
+}
+
+/* ── CTA ── */
+.cta-section {
+  background: var(--forest);
+  text-align: center;
+  padding: 100px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.cta-section > * { position: relative; z-index: 1; }
+.cta-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.cta-title {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.cta-sub {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 40px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+.cta-email {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--bg);
+  background: white;
+  padding: 16px 36px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 16px;
+}
+.cta-email:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.cta-note {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em;
+  margin-top: 8px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 32px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-left {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+.footer-right {
+  display: flex;
+  gap: 24px;
+}
+.footer-right a {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.footer-right a:hover { color: var(--forest3); }
+
+/* ── COMING SOON BADGE ── */
+.coming-soon {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">RF / AI Operations</div>
+  <ul class="nav-links">
+    <li><a href="#results">Results</a></li>
+    <li><a href="#features">What it does</a></li>
+    <li><a href="#output">Output</a></li>
+    <li><a href="https://github.com/rashadflowers99" target="_blank">GitHub ↗</a></li>
+  </ul>
+  <a href="mailto:rashad@example.com" class="nav-cta">Get in touch</a>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero" style="padding-top: 120px;">
+  <div class="hero-bg-num">01</div>
+
+  <div class="hero-eyebrow">Project 01 &nbsp;/&nbsp; Real Estate Operations</div>
+
+  <h1>
+    Your lead list is<br>
+    <em>costing you commissions</em><br>
+    you don't know about.
+  </h1>
+
+  <p class="hero-sub">
+    I built a pipeline that takes your messy CRM export and returns clean, import-ready leads — plus a personalized outreach script for every contact missing an email. One command. Under 10 seconds.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#results" class="btn-primary">
+      <span>See live results</span>
+      <span>↓</span>
+    </a>
+    <a href="https://github.com/rashadflowers99" target="_blank" class="btn-secondary">
+      <span>View on GitHub</span>
+      <span>↗</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-inner">
+    <span class="ticker-item">Phone normalization <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Duplicate removal <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Budget standardization <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Source label cleanup <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Same-name conflict scoring <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Email outreach scripts <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Four-tab master workbook <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Florida metro intelligence <span class="ticker-dot">·</span></span>
+    <!-- repeat for seamless loop -->
+    <span class="ticker-item">Phone normalization <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Duplicate removal <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Budget standardization <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Source label cleanup <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Same-name conflict scoring <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Email outreach scripts <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Four-tab master workbook <span class="ticker-dot">·</span></span>
+    <span class="ticker-item">Florida metro intelligence <span class="ticker-dot">·</span></span>
+  </div>
+</div>
+
+
+<!-- LIVE RESULTS -->
+<section class="results-section" id="results">
+  <div class="section-label reveal">Live demo results</div>
+  <h2 class="section-title reveal">Run on a real 50-record<br>Florida leads file.</h2>
+
+  <div class="results-grid reveal" style="margin-top: 48px;">
+    <div class="stat-card stat-green">
+      <span class="stat-num" data-target="50">0</span>
+      <div class="stat-label">Records<br>received</div>
+    </div>
+    <div class="stat-card stat-green">
+      <span class="stat-num" data-target="7">0</span>
+      <div class="stat-label">Duplicates<br>removed</div>
+    </div>
+    <div class="stat-card stat-green">
+      <span class="stat-num" data-target="32">0</span>
+      <div class="stat-label">Import-ready<br>leads</div>
+    </div>
+    <div class="stat-card stat-amber">
+      <span class="stat-num" data-target="11">0</span>
+      <div class="stat-label">Email outreach<br>queue</div>
+      <div class="stat-note">Warm leads — not discarded</div>
+    </div>
+  </div>
+
+  <div class="results-grid reveal" style="margin-top: 1px;">
+    <div class="stat-card stat-amber">
+      <span class="stat-num" data-prefix="$" data-target="522" data-suffix="K">$0K</span>
+      <div class="stat-label">Avg budget in<br>outreach queue</div>
+    </div>
+    <div class="stat-card stat-amber">
+      <span class="stat-num" data-prefix="~$" data-target="13" data-suffix="K">~$0K</span>
+      <div class="stat-label">Est. commission<br>per close (2.5%)</div>
+    </div>
+    <div class="stat-card stat-red">
+      <span class="stat-num" data-target="80">0</span>
+      <div class="stat-label">Same-name pairs<br>scored</div>
+    </div>
+    <div class="stat-card stat-red">
+      <span class="stat-num" data-target="7">0</span>
+      <div class="stat-label">Likely duplicates<br>flagged</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WHAT IT DOES -->
+<section id="features" style="background: var(--bg); padding-top: 100px; padding-bottom: 0;">
+  <div class="section-label reveal">What it does</div>
+  <h2 class="section-title reveal">Six problems.<br>One command.</h2>
+
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <span class="feature-icon">📞</span>
+      <div class="feature-title">Phone Normalization</div>
+      <p class="feature-body">Every format your agents actually export — 10 digits, dashes, dots, parentheses, country code — standardized to (XXX) XXX-XXXX. No exceptions, no manual review.</p>
+      <span class="feature-tag">5 formats handled</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔁</span>
+      <div class="feature-title">Smart Deduplication</div>
+      <p class="feature-body">Matches by phone OR email — whichever is present. Catches re-entries across different sources. Keeps the first occurrence, removes the rest automatically.</p>
+      <span class="feature-tag">7 dupes removed in demo</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📧</span>
+      <div class="feature-title">Email Outreach Queue</div>
+      <p class="feature-body">Leads with a verified phone but no email don't get discarded — they go to a dedicated tab with a personalized SMS and call script ready to copy and send. One touch recovers the lead.</p>
+      <span class="feature-tag">11 leads saved in demo</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔍</span>
+      <div class="feature-title">Same-Name Conflict Scoring</div>
+      <p class="feature-body">Rule-based confidence scoring — not fuzzy matching — using area codes, budgets, source labels, and Florida metro geography. Returns a verdict per pair with reasoning spelled out.</p>
+      <span class="feature-tag">3 verdict tiers</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💰</span>
+      <div class="feature-title">Budget Standardization</div>
+      <p class="feature-body">$450k, 650000, $650,000 — all normalized to $XXX,XXX format. "Unknown" values stay labeled so agents know to qualify on the first call rather than guess.</p>
+      <span class="feature-tag">4 input formats</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🏷️</span>
+      <div class="feature-title">Source Label Cleanup</div>
+      <p class="feature-body">"zillow lead", "ZILLOW", "Zillow" all become "Zillow". "FB_Ad_1", "FB_Ad_2" become "Facebook Ad". Canonical source names so your attribution data is actually usable.</p>
+      <span class="feature-tag">6 → 3 sources in demo</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- BEFORE / AFTER -->
+<section class="ba-section" style="padding-top: 80px;">
+  <div class="section-label reveal">Before and after</div>
+  <h2 class="section-title reveal">What goes in.<br>What comes out.</h2>
+
+  <table class="ba-table reveal">
+    <thead>
+      <tr>
+        <th class="th-field">Field</th>
+        <th class="th-before">Raw input</th>
+        <th class="th-after">Cleaned output</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-field">Phone</td>
+        <td class="td-before">9047624843 / 407.724.1971</td>
+        <td class="td-after">(904) 762-4843 &nbsp;/&nbsp; (407) 724-1971</td>
+      </tr>
+      <tr>
+        <td class="td-field">Email</td>
+        <td class="td-before">MichaelScott31@AOL.com</td>
+        <td class="td-after">michaelscott31@aol.com</td>
+      </tr>
+      <tr>
+        <td class="td-field">Budget</td>
+        <td class="td-before">$450k &nbsp;/&nbsp; 650000</td>
+        <td class="td-after">$450,000 &nbsp;/&nbsp; $650,000</td>
+      </tr>
+      <tr>
+        <td class="td-field">Source</td>
+        <td class="td-before">zillow lead / ZILLOW / FB_Ad_1</td>
+        <td class="td-after">Zillow &nbsp;/&nbsp; Zillow &nbsp;/&nbsp; Facebook Ad</td>
+      </tr>
+      <tr>
+        <td class="td-field">Name</td>
+        <td class="td-before">JANE SMITH / john doe</td>
+        <td class="td-after">Jane Smith &nbsp;/&nbsp; John Doe &nbsp;(First + Last split)</td>
+      </tr>
+      <tr>
+        <td class="td-field">Missing email</td>
+        <td class="td-before">Discarded — never followed up</td>
+        <td class="td-after">Email Outreach tab — SMS + call script included</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- CONFLICT SCORING -->
+<section class="conflict-section" id="conflicts">
+  <div class="section-label reveal">Same-name conflict detection</div>
+  <h2 class="section-title reveal">The problem phone deduplication<br>can't solve.</h2>
+
+  <div class="conflict-explainer reveal">
+    <div>
+      <p class="conflict-body">
+        Phone and email deduplication catches exact re-entries. It doesn't catch the harder problem: <strong>the same name appearing multiple times with different contact details</strong>.
+        <br><br>
+        This pipeline detects every same-name group and scores each pair using business logic — not fuzzy string matching. The scorer looks at area codes, budget proximity, source labels, and Florida metro geography together.
+        <br><br>
+        Every pair gets a verdict and a written explanation. The agent opens the <strong>⚠ Name Conflicts tab</strong>, reads the reasoning, and makes the call: Merge, Keep Both, or Discard.
+      </p>
+    </div>
+
+    <div class="verdict-stack">
+      <div class="verdict-card v-red-card">
+        <span class="verdict-label vl-red">🔴 Likely Duplicate</span>
+        <p class="verdict-why">Same area code (+3) and one entry missing email (+2). Score ≥ 4. Recommend merging — almost certainly the same person entered twice from different sources.</p>
+      </div>
+      <div class="verdict-card v-yel-card">
+        <span class="verdict-label vl-yel">🟡 Possible Duplicate</span>
+        <p class="verdict-why">Partial overlap — same source, similar budget, or one incomplete entry. Score 1–3. Agent makes the final call.</p>
+      </div>
+      <div class="verdict-card v-grn-card">
+        <span class="verdict-label vl-grn">🟢 Probably Different</span>
+        <p class="verdict-why">Different FL metros (Tampa vs Jacksonville = −2). Score ≤ 0. Treat as separate leads — the geography says they're different people.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- OUTPUT TABS -->
+<section class="tabs-section" id="output">
+  <div class="section-label reveal">Output</div>
+  <h2 class="section-title reveal">One workbook.<br>Four tabs. Everything organized.</h2>
+
+  <div class="tab-grid reveal">
+    <div class="tab-card tab-green">
+      <span class="tab-num">TAB 01</span>
+      <div class="tab-name">Master List</div>
+      <p class="tab-body">All 43 leads in one view, color-coded by status. Green rows are import-ready. Amber rows need an email. Full picture at a glance.</p>
+    </div>
+    <div class="tab-card tab-green">
+      <span class="tab-num">TAB 02</span>
+      <div class="tab-name">✓ Import Ready</div>
+      <p class="tab-body">32 fully standardized records. Six columns, zero noise. Open this tab and drag it straight into your CRM import screen.</p>
+    </div>
+    <div class="tab-card tab-amber">
+      <span class="tab-num">TAB 03</span>
+      <div class="tab-name">📞 Email Outreach</div>
+      <p class="tab-body">11 warm leads. Each row has a personalized SMS script and call script. Two blank columns — Email Collected and Date Contacted — to fill in as you work the list.</p>
+    </div>
+    <div class="tab-card tab-red">
+      <span class="tab-num">TAB 04</span>
+      <div class="tab-name">⚠ Name Conflicts</div>
+      <p class="tab-body">80 same-name pairs scored and sorted by urgency. Likely duplicates at the top. Every pair shows both records side by side with the verdict and reasoning.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- TIME MATH -->
+<section class="time-section">
+  <div class="section-label reveal">The time math</div>
+  <h2 class="section-title reveal">3.5 hours of manual work.<br>Under 10 seconds.</h2>
+
+  <table class="time-table reveal">
+    <thead>
+      <tr>
+        <th class="th-task">Task</th>
+        <th class="th-manual" style="text-align:center">Manual</th>
+        <th class="th-auto" style="text-align:center">This tool</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-task">Standardize 50 phone numbers</td>
+        <td class="td-manual">~45 min</td>
+        <td class="td-auto">&lt; 1 sec</td>
+      </tr>
+      <tr class="tr-alt">
+        <td class="td-task">Remove duplicate records</td>
+        <td class="td-manual">~30 min</td>
+        <td class="td-auto">&lt; 1 sec</td>
+      </tr>
+      <tr>
+        <td class="td-task">Fix name casing, split First + Last</td>
+        <td class="td-manual">~15 min</td>
+        <td class="td-auto">&lt; 1 sec</td>
+      </tr>
+      <tr class="tr-alt">
+        <td class="td-task">Normalize budget values</td>
+        <td class="td-manual">~20 min</td>
+        <td class="td-auto">&lt; 1 sec</td>
+      </tr>
+      <tr>
+        <td class="td-task">Score same-name conflicts</td>
+        <td class="td-manual">~60 min</td>
+        <td class="td-auto">&lt; 1 sec</td>
+      </tr>
+      <tr class="tr-alt">
+        <td class="td-task">Write personalized outreach scripts</td>
+        <td class="td-manual">~30 min</td>
+        <td class="td-auto">&lt; 1 sec</td>
+      </tr>
+      <tr class="tr-total">
+        <td class="td-task">Total</td>
+        <td class="td-manual">~3.5 hours</td>
+        <td class="td-auto">&lt; 10 seconds</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-eyebrow">Ready to reclaim your time?</div>
+  <h2 class="cta-title">Send me your next export.<br>I'll show you what comes back.</h2>
+  <p class="cta-sub">No pitch deck, no discovery call required. Send the file, get the cleaned workbook back within 24 hours. If it's not obviously better than what you had, you owe me nothing.</p>
+  <a href="mailto:rashad@example.com" class="cta-email">rashad@example.com</a>
+  <span class="cta-note">Or find me at rashad.io</span>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    RASHAD FERGUSON &nbsp;/&nbsp; AI OPERATIONS &nbsp;·&nbsp; PROJECT 01 OF 03
+    <br>
+    <span style="margin-top:4px; display:block;">
+      Project 02: Client Intake Note Summarizer <span class="coming-soon">coming soon</span>
+      &nbsp;&nbsp;
+      Project 03: Monthly Operations Report <span class="coming-soon">coming soon</span>
+    </span>
+  </div>
+  <div class="footer-right">
+    <a href="https://rashad.io" target="_blank">Portfolio ↗</a>
+    <a href="https://github.com/rashadflowers99" target="_blank">GitHub ↗</a>
+    <a href="mailto:rashad@example.com">Email</a>
+  </div>
+</footer>
+
+
+<script>
+// ── Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ── Animated counters
+function animateCounter(el) {
+  const target  = parseInt(el.dataset.target);
+  const prefix  = el.dataset.prefix || '';
+  const suffix  = el.dataset.suffix || '';
+  const duration = 1200;
+  const start    = performance.now();
+
+  function update(now) {
+    const elapsed  = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease     = 1 - Math.pow(1 - progress, 3);
+    const value    = Math.round(ease * target);
+    el.textContent = prefix + value.toLocaleString() + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const statNums = document.querySelectorAll('.stat-num[data-target]');
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      statObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+statNums.forEach(el => statObserver.observe(el));
+</script>
+
+</body>
+</html>

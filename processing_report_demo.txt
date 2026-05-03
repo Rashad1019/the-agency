@@ -1,0 +1,51 @@
+════════════════════════════════════════════════════
+  LEAD LIST PROCESSING REPORT
+  Prepared by Rashad Ferguson
+  portfolioofrashad.vercel.app
+════════════════════════════════════════════════════
+
+  Run date:    2026-05-03 18:13
+  Source file: messy_florida_leads.xlsx
+
+────────────────────────────────────────────────────
+  RESULTS SUMMARY
+────────────────────────────────────────────────────
+  Records received:            50
+  Duplicates removed:         -7
+  ────────────────────────────────
+  After deduplication:         43
+
+  ✓  Import-ready:             32
+  📞 Email outreach queue:     11
+  ⚠  Needs manual review:      0
+
+────────────────────────────────────────────────────
+  EMAIL OUTREACH QUEUE
+────────────────────────────────────────────────────
+  11 leads have a valid phone but no email on file.
+  Personalized SMS + call scripts included per lead.
+  Average budget: $522,727
+  Est. commission per close (~2.5%): $13,068
+  Potential if all 11 convert: $143,748
+  One 5-minute call per lead. That is the only work required.
+
+────────────────────────────────────────────────────
+  SAME-NAME CONFLICT REPORT
+────────────────────────────────────────────────────
+  80 same-name pairs detected across 10 name groups.
+  7 pairs scored LIKELY DUPLICATE — review first.
+  16 pairs scored POSSIBLE DUPLICATE — agent judgement required.
+  See the '⚠ Name Conflicts' tab in the master workbook.
+
+────────────────────────────────────────────────────
+  WHAT WAS STANDARDIZED
+────────────────────────────────────────────────────
+  • Phone numbers  → (XXX) XXX-XXXX
+  • Email          → lowercase, validated
+  • Budget         → $XXX,XXX  ('$450k' → '$450,000')
+  • Source labels  → canonical  ('zillow lead' → 'Zillow')
+  • Names          → Title Case, split First + Last
+
+════════════════════════════════════════════════════
+  Questions? portfolioofrashad.vercel.app
+════════════════════════════════════════════════════
