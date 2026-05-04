@@ -701,6 +701,266 @@ footer {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+@media (max-width: 900px) {
+  nav {
+    padding: 16px 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    gap: 22px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar { display: none; }
+
+  .hero {
+    min-height: 92vh;
+    padding: 150px 28px 64px !important;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 10vw, 62px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    max-width: 620px;
+  }
+
+  .hero-bg-num {
+    right: -16px;
+    bottom: 24px;
+    font-size: 220px;
+    opacity: 0.65;
+  }
+
+  section,
+  .cta-section {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features-grid,
+  .conflict-explainer {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ba-table,
+  .time-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ba-table thead,
+  .ba-table tbody,
+  .time-table thead,
+  .time-table tbody {
+    display: table;
+    width: 100%;
+    min-width: 680px;
+  }
+
+  footer {
+    padding: 28px;
+    gap: 20px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  nav {
+    padding: 14px 18px;
+  }
+
+  .nav-logo {
+    font-size: 10px;
+    max-width: 150px;
+    line-height: 1.4;
+  }
+
+  .nav-cta {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 142px 20px 56px !important;
+  }
+
+  .hero::after {
+    background-size: 42px 42px;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 13vw, 48px);
+    margin-bottom: 24px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+
+  .hero-actions {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .cta-email {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn-secondary {
+    padding: 12px 0;
+  }
+
+  .hero-bg-num {
+    font-size: 150px;
+    bottom: 6px;
+    right: -10px;
+  }
+
+  .ticker-item {
+    padding: 0 24px;
+    font-size: 10px;
+  }
+
+  section {
+    padding: 72px 20px;
+  }
+
+  #features {
+    padding-top: 72px !important;
+  }
+
+  .section-title {
+    font-size: clamp(30px, 10vw, 40px);
+  }
+
+  .section-label {
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .section-label::after {
+    max-width: 44px;
+    margin-top: 7px;
+  }
+
+  .results-grid,
+  .tab-grid {
+    grid-template-columns: 1fr;
+    margin-top: 32px !important;
+  }
+
+  .stat-card {
+    padding: 28px 24px;
+  }
+
+  .stat-num {
+    font-size: 42px;
+  }
+
+  .features-grid,
+  .conflict-explainer {
+    margin-top: 32px;
+  }
+
+  .feature-card,
+  .tab-card {
+    padding: 28px 24px;
+  }
+
+  .verdict-card {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 18px 20px;
+  }
+
+  .verdict-label {
+    width: fit-content;
+    white-space: normal;
+  }
+
+  .ba-table,
+  .time-table {
+    margin-top: 32px;
+  }
+
+  .ba-table th,
+  .ba-table td,
+  .time-table th,
+  .time-table td {
+    padding: 12px 14px;
+    font-size: 11px;
+  }
+
+  .cta-section {
+    padding: 72px 20px;
+  }
+
+  .cta-sub {
+    font-size: 16px;
+  }
+
+  footer {
+    padding: 24px 20px;
+  }
+
+  .footer-right {
+    width: 100%;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 </style>
 </head>
 <body>
