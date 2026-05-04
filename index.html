@@ -754,10 +754,7 @@ footer {
   }
 
   .features-grid,
-  .conflict-explainer {
-    grid-template-columns: 1fr;
-  }
-
+  .conflict-explainer,
   .spreadsheet-grid {
     grid-template-columns: 1fr !important;
   }
@@ -826,8 +823,15 @@ footer {
   }
 
   .hero h1 {
-    font-size: clamp(36px, 13vw, 48px);
+    max-width: 100%;
+    font-size: clamp(31px, 10.8vw, 38px);
+    line-height: 1.03;
     margin-bottom: 24px;
+    overflow-wrap: break-word;
+  }
+
+  .hero h1 em {
+    overflow-wrap: anywhere;
   }
 
   .hero-sub {
@@ -874,7 +878,10 @@ footer {
   }
 
   .section-title {
-    font-size: clamp(30px, 10vw, 40px);
+    max-width: 100%;
+    font-size: clamp(27px, 8.8vw, 34px);
+    line-height: 1.12;
+    overflow-wrap: break-word;
   }
 
   .section-label {
@@ -927,12 +934,150 @@ footer {
     margin-top: 32px;
   }
 
+  .ba-table {
+    display: block;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .ba-table thead {
+    display: none;
+  }
+
+  .ba-table tbody {
+    display: block;
+    min-width: 0;
+  }
+
+  .ba-table tr {
+    display: block;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+
+  .ba-table td {
+    display: block;
+    width: 100%;
+    border-top: 1px solid var(--border);
+    overflow-wrap: anywhere;
+  }
+
+  .ba-table td:first-child {
+    border-top: 0;
+  }
+
+  .td-field {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .td-before::before,
+  .td-after::before {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .td-before::before {
+    content: "Raw input";
+    color: var(--red2);
+  }
+
+  .td-after::before {
+    content: "Cleaned output";
+    color: var(--forest3);
+  }
+
+  .time-table {
+    display: block;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .time-table thead {
+    display: none;
+  }
+
+  .time-table tbody {
+    display: block;
+    min-width: 0;
+  }
+
+  .time-table tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+
+  .time-table td {
+    display: grid;
+    grid-template-columns: 86px 1fr;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    border-top: 1px solid var(--border);
+    overflow-wrap: anywhere;
+  }
+
+  .time-table td:first-child {
+    display: block;
+    border-top: 0;
+  }
+
+  .td-manual::before,
+  .td-auto::before {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .td-manual::before {
+    content: "Manual";
+    color: var(--red2);
+  }
+
+  .td-auto::before {
+    content: "This tool";
+    color: var(--forest3);
+  }
+
   .ba-table th,
   .ba-table td,
   .time-table th,
   .time-table td {
     padding: 12px 14px;
     font-size: 11px;
+  }
+
+  .spreadsheet-grid {
+    gap: 32px !important;
+  }
+
+  .spreadsheet-grid > div {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .spreadsheet-grid > div > div:nth-child(2) {
+    max-width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .spreadsheet-grid [style*="display:grid"] > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .cta-section {
