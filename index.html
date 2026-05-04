@@ -1123,6 +1123,252 @@ footer {
 </section>
 
 
+<!-- SPREADSHEET VISUAL -->
+<section style="background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 48px;">
+  <div class="section-label reveal">You know this spreadsheet</div>
+  <h2 class="section-title reveal">This is what Monday morning<br>looks like. We fix it.</h2>
+  <p style="font-family: var(--serif); font-size: 16px; color: var(--text-mid); max-width: 560px; line-height: 1.7; margin-top: 16px; margin-bottom: 56px;" class="reveal">
+    This is your actual Zillow export. Every agent has a version of this file sitting in their Downloads folder right now.
+  </p>
+
+  <div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;">
+
+    <!-- BEFORE -->
+    <div>
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+        <div style="width:10px; height:10px; border-radius:50%; background:#E74C3C;"></div>
+        <span style="font-family:var(--mono); font-size:11px; color:#E74C3C; letter-spacing:0.1em; text-transform:uppercase;">Before — raw export</span>
+      </div>
+      <div style="border:1px solid rgba(192,57,43,0.3); border-radius:4px; overflow:hidden; font-family:var(--mono); font-size:11px;">
+
+        <!-- Tab bar -->
+        <div style="background:#1a1008; padding:8px 16px; border-bottom:1px solid rgba(192,57,43,0.2); display:flex; gap:4px;">
+          <div style="background:rgba(192,57,43,0.15); border:1px solid rgba(192,57,43,0.3); padding:4px 12px; border-radius:2px 2px 0 0; color:#E74C3C; font-size:10px;">messy_florida_leads.xlsx</div>
+        </div>
+
+        <!-- Header row -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; background:#2a1010; border-bottom:1px solid rgba(192,57,43,0.25);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; border-right:1px solid rgba(192,57,43,0.15);"></div>
+          <div style="padding:6px 8px; color:#c87070; font-size:9px; border-right:1px solid rgba(192,57,43,0.15);">A  Lead_Name</div>
+          <div style="padding:6px 8px; color:#c87070; font-size:9px; border-right:1px solid rgba(192,57,43,0.15);">B  Phone</div>
+          <div style="padding:6px 8px; color:#c87070; font-size:9px; border-right:1px solid rgba(192,57,43,0.15);">C  Email</div>
+          <div style="padding:6px 8px; color:#c87070; font-size:9px; border-right:1px solid rgba(192,57,43,0.15);">D  Source</div>
+          <div style="padding:6px 8px; color:#c87070; font-size:9px;">E  Budget</div>
+        </div>
+
+        <!-- Row 1 — missing email, raw phone, bad source, raw budget -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(192,57,43,0.1);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; background:#1a1008; border-right:1px solid rgba(192,57,43,0.15);">1</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">Barry Allen</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">407-724-1971</div>
+          <div style="padding:6px 8px; font-size:10px; color:rgba(192,57,43,0.4); background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">&#8212;</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">Website Contact</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18);">650000</div>
+        </div>
+
+        <!-- Row 2 — raw phone, uppercase email, bad source -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(192,57,43,0.1); background:rgba(192,57,43,0.04);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; background:#1a1008; border-right:1px solid rgba(192,57,43,0.15);">2</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">Michael Scott</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">9047624843</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">MichaelScott31@AOL.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">website</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090;">650000</div>
+        </div>
+
+        <!-- Row 3 — lowercase name, raw phone, unknown budget -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(192,57,43,0.1);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; background:#1a1008; border-right:1px solid rgba(192,57,43,0.15);">3</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">sarah Connor</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">4079809692</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">sarahConnor40@AOL.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">Realtor.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18);">Unknown</div>
+        </div>
+
+        <!-- Row 4 — lowercase name, missing email, bad source -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(192,57,43,0.1); background:rgba(192,57,43,0.04);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; background:#1a1008; border-right:1px solid rgba(192,57,43,0.15);">4</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">john doe</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">9049578340</div>
+          <div style="padding:6px 8px; font-size:10px; color:rgba(192,57,43,0.4); background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">&#8212;</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">website</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090;">500000</div>
+        </div>
+
+        <!-- Row 5 — DUPLICATE of row 4, amber highlight -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(192,57,43,0.1);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; background:#1a1008; border-right:1px solid rgba(192,57,43,0.15);">5</div>
+          <div style="padding:6px 8px; font-size:10px; color:#d4a017; background:rgba(212,160,23,0.12); border-right:1px solid rgba(192,57,43,0.1);" title="Duplicate name">john doe</div>
+          <div style="padding:6px 8px; font-size:10px; color:#d4a017; background:rgba(212,160,23,0.12); border-right:1px solid rgba(192,57,43,0.1);">(407) 621-4051</div>
+          <div style="padding:6px 8px; font-size:10px; color:#d4a017; background:rgba(212,160,23,0.12); border-right:1px solid rgba(192,57,43,0.1);">johndoe25@AOL.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#d4a017; background:rgba(212,160,23,0.12); border-right:1px solid rgba(192,57,43,0.1);">Realtor.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#d4a017; background:rgba(212,160,23,0.12);">650000</div>
+        </div>
+
+        <!-- Row 6 — dot-format phone, bad source -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(192,57,43,0.1); background:rgba(192,57,43,0.04);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; background:#1a1008; border-right:1px solid rgba(192,57,43,0.15);">6</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">clark kent</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">305.693.3438</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">clarkkent13@AOL.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">website</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090;">650000</div>
+        </div>
+
+        <!-- Row 7 — shorthand budget -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(192,57,43,0.1);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; background:#1a1008; border-right:1px solid rgba(192,57,43,0.15);">7</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">Hal Jordan</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">407-294-1782</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">HalJordan40@AOL.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">Zillow</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18);">$450k</div>
+        </div>
+
+        <!-- Row 8 — raw 10-digit phone -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(192,57,43,0.1); background:rgba(192,57,43,0.04);">
+          <div style="padding:6px 4px; color:#3a2a2a; font-size:9px; text-align:center; background:#1a1008; border-right:1px solid rgba(192,57,43,0.15);">8</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">Bruce Wayne</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18); border-right:1px solid rgba(192,57,43,0.1);">8135722369</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">BruceWayne13@AOL.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#b09090; border-right:1px solid rgba(192,57,43,0.1);">Zillow</div>
+          <div style="padding:6px 8px; font-size:10px; color:#ff9090; background:rgba(192,57,43,0.18);">$450k</div>
+        </div>
+
+      </div>
+      <div style="margin-top:10px; font-family:var(--mono); font-size:10px; color:var(--text-dim);">
+        &#9888; &nbsp;5 phone formats &nbsp;&middot;&nbsp; duplicate names &nbsp;&middot;&nbsp; mixed budgets &nbsp;&middot;&nbsp; inconsistent sources
+      </div>
+    </div>
+
+    <!-- AFTER -->
+    <div>
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+        <div style="width:10px; height:10px; border-radius:50%; background:var(--forest2);"></div>
+        <span style="font-family:var(--mono); font-size:11px; color:var(--forest3); letter-spacing:0.1em; text-transform:uppercase;">After — cleaned output</span>
+      </div>
+      <div style="border:1px solid rgba(42,122,78,0.3); border-radius:4px; overflow:hidden; font-family:var(--mono); font-size:11px;">
+
+        <!-- Tab bar -->
+        <div style="background:#081a10; padding:8px 16px; border-bottom:1px solid rgba(42,122,78,0.2); display:flex; gap:4px; overflow:hidden;">
+          <div style="background:rgba(42,122,78,0.25); border:1px solid rgba(42,122,78,0.4); padding:4px 10px; border-radius:2px 2px 0 0; color:var(--forest3); font-size:9px; white-space:nowrap;">&#10003; Import Ready</div>
+          <div style="background:rgba(212,160,23,0.15); border:1px solid rgba(212,160,23,0.3); padding:4px 10px; border-radius:2px 2px 0 0; color:var(--amber2); font-size:9px; white-space:nowrap;">&#128222; Email Outreach</div>
+          <div style="background:rgba(192,57,43,0.12); border:1px solid rgba(192,57,43,0.25); padding:4px 10px; border-radius:2px 2px 0 0; color:#E74C3C; font-size:9px; white-space:nowrap;">&#9888; Conflicts</div>
+        </div>
+
+        <!-- Header row -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; background:#0d2a18; border-bottom:1px solid rgba(42,122,78,0.25);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; border-right:1px solid rgba(42,122,78,0.15);"></div>
+          <div style="padding:6px 8px; color:var(--forest3); font-size:9px; border-right:1px solid rgba(42,122,78,0.15);">A  First Name</div>
+          <div style="padding:6px 8px; color:var(--forest3); font-size:9px; border-right:1px solid rgba(42,122,78,0.15);">B  Last Name</div>
+          <div style="padding:6px 8px; color:var(--forest3); font-size:9px; border-right:1px solid rgba(42,122,78,0.15);">C  Phone</div>
+          <div style="padding:6px 8px; color:var(--forest3); font-size:9px; border-right:1px solid rgba(42,122,78,0.15);">D  Email</div>
+          <div style="padding:6px 8px; color:var(--forest3); font-size:9px;">E  Budget</div>
+        </div>
+
+        <!-- Row 1 — outreach (no email) -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(42,122,78,0.1);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; background:#081a10; border-right:1px solid rgba(42,122,78,0.15);">1</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Barry</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Allen</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">(407) 724-1971</div>
+          <div style="padding:6px 8px; font-size:10px; color:#d4a017; background:rgba(212,160,23,0.12); border-right:1px solid rgba(42,122,78,0.1);">&#8594; outreach</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8;">$650,000</div>
+        </div>
+
+        <!-- Row 2 -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(42,122,78,0.1); background:rgba(42,122,78,0.05);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; background:#081a10; border-right:1px solid rgba(42,122,78,0.15);">2</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Michael</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Scott</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">(904) 762-4843</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">michaelscott31@aol.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8;">$650,000</div>
+        </div>
+
+        <!-- Row 3 -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(42,122,78,0.1);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; background:#081a10; border-right:1px solid rgba(42,122,78,0.15);">3</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Sarah</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Connor</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">(407) 980-9692</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">sarahconnor40@aol.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#d4a017;">Unknown &#9873;</div>
+        </div>
+
+        <!-- Row 4 — dupe removed, john doe consolidated -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(42,122,78,0.1); background:rgba(42,122,78,0.05);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; background:#081a10; border-right:1px solid rgba(42,122,78,0.15);">4</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">John</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Doe</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">(407) 621-4051</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">johndoe25@aol.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8;">$650,000</div>
+        </div>
+
+        <!-- Row 5 -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(42,122,78,0.1);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; background:#081a10; border-right:1px solid rgba(42,122,78,0.15);">5</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Clark</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Kent</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">(305) 693-3438</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">clarkkent13@aol.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8;">$650,000</div>
+        </div>
+
+        <!-- Row 6 -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(42,122,78,0.1); background:rgba(42,122,78,0.05);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; background:#081a10; border-right:1px solid rgba(42,122,78,0.15);">6</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Hal</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Jordan</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">(407) 294-1782</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">haljordan40@aol.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8;">$450,000</div>
+        </div>
+
+        <!-- Row 7 -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(42,122,78,0.1);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; background:#081a10; border-right:1px solid rgba(42,122,78,0.15);">7</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Bruce</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Wayne</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">(813) 572-2369</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">brucewayne13@aol.com</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8;">$450,000</div>
+        </div>
+
+        <!-- Row 8 — outreach -->
+        <div style="display:grid; grid-template-columns:24px 1fr 1fr 1fr 1fr 1fr; border-top:1px solid rgba(42,122,78,0.1); background:rgba(42,122,78,0.05);">
+          <div style="padding:6px 4px; color:#1a3a2a; font-size:9px; text-align:center; background:#081a10; border-right:1px solid rgba(42,122,78,0.15);">8</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">John</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">Doe</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8; border-right:1px solid rgba(42,122,78,0.1);">(904) 957-8340</div>
+          <div style="padding:6px 8px; font-size:10px; color:#d4a017; background:rgba(212,160,23,0.12); border-right:1px solid rgba(42,122,78,0.1);">&#8594; outreach</div>
+          <div style="padding:6px 8px; font-size:10px; color:#90c8a8;">$500,000</div>
+        </div>
+
+      </div>
+      <div style="margin-top:10px; font-family:var(--mono); font-size:10px; color:var(--text-dim);">
+        &#10003; &nbsp;32 import-ready &nbsp;&middot;&nbsp; 11 in outreach queue &nbsp;&middot;&nbsp; 7 conflicts flagged
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Legend -->
+  <div class="reveal" style="display:flex; gap:24px; margin-top:32px; flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px; color:var(--text-mid);">
+      <div style="width:12px; height:12px; background:rgba(192,57,43,0.25); border-radius:2px;"></div> Problem field
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px; color:var(--text-mid);">
+      <div style="width:12px; height:12px; background:rgba(212,160,23,0.2); border-radius:2px;"></div> Duplicate / needs review
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px; color:var(--text-mid);">
+      <div style="width:12px; height:12px; background:rgba(212,160,23,0.2); border-radius:2px;"></div> &#8594; outreach (warm lead, not discarded)
+    </div>
+  </div>
+</section>
+
 <!-- BEFORE / AFTER -->
 <section class="ba-section" style="padding-top: 80px;">
   <div class="section-label reveal">Before and after</div>
