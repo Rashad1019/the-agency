@@ -824,14 +824,18 @@ footer {
 
   .hero h1 {
     max-width: 100%;
-    font-size: clamp(31px, 10.8vw, 38px);
+    font-size: clamp(25px, 8vw, 32px);
     line-height: 1.03;
     margin-bottom: 24px;
     overflow-wrap: break-word;
   }
 
   .hero h1 em {
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+  }
+
+  .hero h1 em .hero-line {
+    display: block;
   }
 
   .hero-sub {
@@ -1135,7 +1139,7 @@ footer {
 
   <h1>
     Your lead list is<br>
-    <em>costing you commissions</em><br>
+    <em><span class="hero-line">costing you</span> <span class="hero-line">commissions</span></em><br>
     you don't know about.
   </h1>
 
